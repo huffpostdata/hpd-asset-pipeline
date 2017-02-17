@@ -2,11 +2,11 @@
 
 const fs = require('fs')
 
-describe('raw logic', () => {
-  const rootOptions = { host: 'http://a', baseHref: '/b', basePath: `${__dirname}/fixtures` }
+describe('digest logic', () => {
+  const rootOptions = { host: 'http://a', baseHref: '/b', basePath: `${__dirname}/../fixtures` }
 
   function go(paths) {
-    return index.logic.raw.sync(rootOptions, paths)
+    return index.logic.digest.sync(rootOptions, paths)
   }
 
   it('should error when file does not exist', () => {
@@ -18,8 +18,8 @@ describe('raw logic', () => {
     const asset = go([ 'image-1.png' ])[0]
 
     it('should set key', () => expect(asset.key).to.eq('image-1.png'))
-    it('should set href = key', () => expect(asset.href).to.eq('/b/image-1.png'))
-    it('should read data', () => expect(asset.data).to.deep.eq(fs.readFileSync(`${__dirname}/fixtures/image-1.png`)))
+    it('should set href = key+digest', () => expect(asset.href).to.eq('/b/image-1-d87fc508.png'))
+    it('should read data', () => expect(asset.data).to.deep.eq(fs.readFileSync(`${__dirname}/../fixtures/image-1.png`)))
     it('should set Content-Type', () => expect(asset.contentType).to.eq('image/png'))
   })
 
