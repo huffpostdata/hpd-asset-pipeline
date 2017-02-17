@@ -3,15 +3,14 @@
 const fs = require('fs')
 
 describe('digest logic', () => {
-  const rootOptions = { host: 'http://a', baseHref: '/b', basePath: `${__dirname}/../fixtures` }
+  const bucket = { host: 'http://a', baseHref: '/b', basePath: `${__dirname}/../fixtures` }
 
   function go(paths) {
-    return index.logic.digest.sync(rootOptions, paths)
+    return index.logic.digest.sync(bucket, paths)
   }
 
   it('should error when file does not exist', () => {
-    expect(() => go([ 'this-file-does-not-exist' ]))
-      .to.throw(Error)
+    expect(() => go([ 'this-file-does-not-exist' ])).to.throw(Error)
   })
 
   describe('with a PNG', () => {

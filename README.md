@@ -153,9 +153,16 @@ Logic implementation
 --------------------
 
 These aren't "plugins" (yet). Each "logic" is an Object which a Function member
-named `sync` or `async`. ([Prefer sync](https://medium.com/@adamhooper/node-synchronous-code-runs-faster-than-asynchronous-code-b0553d5cf54e)) It accepts two arguments: `configuration` (the Object
-described in the code above) and `paths` (the result of globbing). sync throws;
-async returns `callback(new Error(...))`.
+named `sync` or `async`. ([Prefer sync](https://medium.com/@adamhooper/node-synchronous-code-runs-faster-than-asynchronous-code-b0553d5cf54e).)
+
+The `sync()` method accepts two arguments: `bucket` (an AssetBucket, with
+`.baseHref` and `.baseUrl` properties, plus `.href_to()` et al for the
+`.assets` which were compiled in previous steps); and `paths` (an Array of
+String paths, from `glob()`). It may throw an Error. Otherwise, it will return
+an Array of `Asset` objects as output.
+
+The `async()` method accepts a third argument, `callback`; in case of error,
+it calls `callback(new Error(...))`.
 
 License
 -------
