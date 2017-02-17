@@ -78,7 +78,7 @@ const configuration = {
       // * Assigns a Content-Type of 'application/javascript'
       // * Produces a source map, e.g., "app-ab234512.js.map", with a
       //   Content-Type of 'application/json'
-      logic: 'js',
+      logic: 'javascript',
       glob: 'javascrippts/app.js'
     },
     {

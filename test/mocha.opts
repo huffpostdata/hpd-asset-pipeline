@@ -1,2 +1,2 @@
---recursive
+./test/*.js ./test/logic/*.js
 --require ./test/helpers.js
