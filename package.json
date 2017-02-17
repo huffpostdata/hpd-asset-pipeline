@@ -1,0 +1,32 @@
+{
+  "name": "hpd-asset-pipeline",
+  "version": "0.0.1",
+  "description": "Yet Another Asset Pipeline",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/huffpostdata/hpd-asset-pipeline.git"
+  },
+  "keywords": [
+    "asset",
+    "pipeline",
+    "scss",
+    "sass",
+    "javascript",
+    "uglifyjs",
+    "glob"
+  ],
+  "author": "Adam Hooper <adam.hooper@huffingtonpost.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/huffpostdata/hpd-asset-pipeline/issues"
+  },
+  "homepage": "https://github.com/huffpostdata/hpd-asset-pipeline#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
