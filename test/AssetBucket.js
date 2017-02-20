@@ -23,8 +23,8 @@ describe('AssetBucket', () => {
 
   describe('a bucket with assets', () => {
     const bucket = new AssetBucket(config, [
-      { key: 'a', path: '/slug/a', data: Buffer.from('contents of "a"'), contentType: 'application/test-content' },
-      { key: 'b.png', path: '/slug/b-1234.png' }
+      { key: 'a', href: '/slug/a', data: Buffer.from('contents of "a"'), contentType: 'application/test-content' },
+      { key: 'b.png', href: '/slug/b-1234.png' }
     ])
 
     it('should href_to() an asset', () => {
@@ -53,6 +53,24 @@ describe('AssetBucket', () => {
     })
     it('should throw on invalid data_for() key', () => {
       expect(() => bucket.data_uri_for('/a')).to.throw(Error)
+    })
+  })
+
+  describe('to_website', () => {
+    it('should generate a StaticWebsite', () => {
+      const bucket = new AssetBucket(config, [
+        { key: 'a', href: '/slug/a', data: Buffer.from('contents of "a"'), contentType: 'application/test-content' },
+        { key: 'b.png', href: '/slug/b-1234.png', data: Buffer.from('image!'), contentType: 'image/png' }
+      ])
+      const website = bucket.to_website()
+      expect(website.endpoints[0]).to.deep.eq({
+        path: '/slug/a',
+        body: Buffer.from('contents of "a"'),
+        headers: {
+          'Content-Type': 'application/test-content',
+          'Cache-Control': 'public; max-age=31536000'
+        }
+      })
     })
   })
 })

@@ -1,6 +1,6 @@
 {
   "name": "hpd-asset-pipeline",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Yet Another Asset Pipeline",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "autoprefixer": "^6.7.4",
     "browser-pack": "^6.0.2",
     "cached-path-relative": "^1.0.1",
+    "in-memory-website": "0.0.2",
     "module-deps": "^4.1.1",
     "node-sass": "^4.5.0",
     "postcss": "^5.2.14",
