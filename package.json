@@ -1,6 +1,6 @@
 {
   "name": "hpd-asset-pipeline",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Yet Another Asset Pipeline",
   "main": "index.js",
   "scripts": {
