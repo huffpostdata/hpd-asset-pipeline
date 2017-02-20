@@ -14,8 +14,6 @@ function renderSteps(steps, stepIndex, partialBucket, callback) {
     cwd: partialBucket.basePath
   })
 
-  console.log(stepIndex, paths)
-
   const stepLogic = logic[step.logic]
   if (!stepLogic) {
     return callback(new Error(`Step ${stepIndex} does not have a valid "logic" property. Please set "logic" to one of ${Object.keys(logic).sort()}`))
@@ -28,11 +26,11 @@ function renderSteps(steps, stepIndex, partialBucket, callback) {
     } catch (e) {
       return callback(e)
     }
-    return renderSteps(steps, stepIndex + 1, partialBucket.plusAssets(newAssets), callback)
+    return renderSteps(steps, stepIndex + 1, partialBucket._plusAssets(newAssets), callback)
   } else if (stepLogic.async) {
     stepLogic.async(partialBucket, paths, (err, newAssets) => {
       if (err) return callback(err)
-      return renderSteps(steps, stepIndex + 1, partialBucket.plusAssets(newAssets), callback)
+      return renderSteps(steps, stepIndex + 1, partialBucket._plusAssets(newAssets), callback)
     })
   } else {
     return callback(new Error(`Logic ${step.logic} has neither a "sync()" or an "async()" member. That's a bug in the logic.`))

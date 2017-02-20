@@ -86,14 +86,14 @@ describe('README.md', () => {
 
       // You can generate a StaticWebsite -- you can upload this to S3 or
       // run it locally
-      const website = bucket.to_website()
+      const website = bucket.toWebsite()
       expect(website.endpoints.length).to.eq(5)
 
       // You can grab URLs:
-      expect(bucket.href_to('javascripts/social.js')).to.eq('/my-project/javascripts/social-c947ca36.js')
-      expect(bucket.url_to('javascripts/social.js')).to.eq('https://assets.example.org/my-project/javascripts/social-c947ca36.js')
-      expect(bucket.data_uri_for('images/logo.png')).to.eq('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg==')
-      expect(bucket.data_for('images/logo.png')).to.deep.eq(fs.readFileSync(`${__dirname}/fixtures/readme/images/logo.png`))
+      expect(bucket.hrefTo('javascripts/social.js')).to.eq('/my-project/javascripts/social-c947ca36.js')
+      expect(bucket.urlTo('javascripts/social.js')).to.eq('https://assets.example.org/my-project/javascripts/social-c947ca36.js')
+      expect(bucket.dataUriFor('images/logo.png')).to.eq('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg==')
+      expect(bucket.dataFor('images/logo.png')).to.deep.eq(fs.readFileSync(`${__dirname}/fixtures/readme/images/logo.png`))
       done()
     })
   })

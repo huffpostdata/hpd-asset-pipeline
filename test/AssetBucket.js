@@ -27,42 +27,42 @@ describe('AssetBucket', () => {
       { key: 'b.png', href: '/slug/b-1234.png' }
     ])
 
-    it('should href_to() an asset', () => {
-      expect(bucket.href_to('a')).to.eq('/slug/a')
+    it('should hrefTo() an asset', () => {
+      expect(bucket.hrefTo('a')).to.eq('/slug/a')
     })
-    it('should throw on invalid href_to() key', () => {
-      expect(() => bucket.href_to('/a')).to.throw(Error)
-    })
-
-    it('should url_to() an asset', () => {
-      expect(bucket.url_to('b.png')).to.eq('https://host/slug/b-1234.png')
-    })
-    it('should throw on invalid url_to() key', () => {
-      expect(() => bucket.url_to('/a')).to.throw(Error)
+    it('should throw on invalid hrefTo() key', () => {
+      expect(() => bucket.hrefTo('/a')).to.throw(Error)
     })
 
-    it('should data_for() an asset', () => {
-      expect(bucket.data_for('a')).to.deep.eq(Buffer.from('contents of "a"'))
+    it('should urlTo() an asset', () => {
+      expect(bucket.urlTo('b.png')).to.eq('https://host/slug/b-1234.png')
     })
-    it('should throw on invalid data_for() key', () => {
-      expect(() => bucket.data_for('/a')).to.throw(Error)
+    it('should throw on invalid urlTo() key', () => {
+      expect(() => bucket.urlTo('/a')).to.throw(Error)
     })
 
-    it('should data_uri_for() an asset', () => {
-      expect(bucket.data_uri_for('a')).to.deep.eq('data:application/test-content;base64,Y29udGVudHMgb2YgImEi')
+    it('should dataFor() an asset', () => {
+      expect(bucket.dataFor('a')).to.deep.eq(Buffer.from('contents of "a"'))
     })
-    it('should throw on invalid data_for() key', () => {
-      expect(() => bucket.data_uri_for('/a')).to.throw(Error)
+    it('should throw on invalid dataFor() key', () => {
+      expect(() => bucket.dataFor('/a')).to.throw(Error)
+    })
+
+    it('should dataUriFor() an asset', () => {
+      expect(bucket.dataUriFor('a')).to.deep.eq('data:application/test-content;base64,Y29udGVudHMgb2YgImEi')
+    })
+    it('should throw on invalid dataUriFor() key', () => {
+      expect(() => bucket.dataUriFor('/a')).to.throw(Error)
     })
   })
 
-  describe('to_website', () => {
+  describe('toWebsite', () => {
     it('should generate a StaticWebsite', () => {
       const bucket = new AssetBucket(config, [
         { key: 'a', href: '/slug/a', data: Buffer.from('contents of "a"'), contentType: 'application/test-content' },
         { key: 'b.png', href: '/slug/b-1234.png', data: Buffer.from('image!'), contentType: 'image/png' }
       ])
-      const website = bucket.to_website()
+      const website = bucket.toWebsite()
       expect(website.endpoints[0]).to.deep.eq({
         path: '/slug/a',
         body: Buffer.from('contents of "a"'),

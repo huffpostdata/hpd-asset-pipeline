@@ -108,13 +108,13 @@ AssetPipeline.render(configuration, (err, bucket) => {
 
   // You can generate a StaticWebsite -- you can upload this to S3 or
   // run it locally
-  const website = bucket.to_website()
+  const website = bucket.toWebsite()
 
   // You can grab URLs:
-  bucket.href_to('javascripts/social.js') // => '/my-project/javascripts/social-ab12341.js'
-  bucket.url_to('javascripts/social.js')  // => 'https://assets.example.org/my-project/javascripts/social-ab12341.js'
-  bucket.data_uri_for('images/logo.png')  // => 'data:image/png;base64,....'
-  bucket.data_for('images/logo.png')      // => a Buffer containing PNG data
+  bucket.hrefTo('javascripts/social.js') // => '/my-project/javascripts/social-ab12341.js'
+  bucket.urlTo('javascripts/social.js')  // => 'https://assets.example.org/my-project/javascripts/social-ab12341.js'
+  bucket.dataUriFor('images/logo.png')  // => 'data:image/png;base64,....'
+  bucket.dataFor('images/logo.png')      // => a Buffer containing PNG data
 }
 ```
 
@@ -146,7 +146,7 @@ Error handling
 Compilation failures (such as missing `require()` or invalid SCSS) will halt
 all compilation and return an Error.
 
-`href_to()`, `url_to()`, `data_uri_for()` and `data_for()` will throw Errors
+`hrefTo()`, `urlTo()`, `dataUriFor()` and `dataFor()` will throw Errors
 when the assets they refer to do not exist.
 
 Logic implementation
@@ -156,7 +156,7 @@ These aren't "plugins" (yet). Each "logic" is an Object which a Function member
 named `sync` or `async`. ([Prefer sync](https://medium.com/@adamhooper/node-synchronous-code-runs-faster-than-asynchronous-code-b0553d5cf54e).)
 
 The `sync()` method accepts two arguments: `bucket` (an AssetBucket, with
-`.baseHref` and `.baseUrl` properties, plus `.href_to()` et al for the
+`.baseHref` and `.baseUrl` properties, plus `.hrefTo()` et al for the
 `.assets` which were compiled in previous steps); and `paths` (an Array of
 String paths, from `glob()`). It may throw an Error. Otherwise, it will return
 an Array of `Asset` objects as output.
