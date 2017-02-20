@@ -57,6 +57,7 @@ const configuration = {
       //
       // * Reads file contents
       // * Runs content through Sass, with special helper methods
+      // * Runs content through postcss, to add vendor prefixes
       // * Gives the asset a "key" ending in ".css": e.g.,
       //   "stylesheets/index.css".
       // * Gives the asset an href incorporating the md5sum and '.css': e.g.,
@@ -124,21 +125,20 @@ Our stylesheets are [Sass](http://sass-lang.com/documentation/file.SASS_REFERENC
 
 We have a couple of helper functions:
 
-* `asset-url(type, key)`: creates a `url()` value pointing to the specified
-  asset. Example: `background-image: asset-url('digest', 'images/header.jpg')`
-  will produce `background-image: url(/images/header-0f0f0f0f0f.jpg)`
-* `asset-data-url(type, key)`: creates a `url(data:[mime];base64,[data])` value
+* `asset-url(key)`: creates a `url()` value pointing to the specified asset.
+  Example: `background-image: asset-url('images/header.jpg')` will produce
+  `background-image: url(/images/header-0f0f0f0f0f.jpg)`
+* `asset-data-url(key)`: creates a `url(data:[mime];base64,[data])` value
   containing all the bytes of the specified asset, with the asset's MIME type.
-  Example: `background-image: asset-url('digest', 'images/highlight.png')`
-  will produce `background-image: url('data:image/png;base64,XXXXXXXXXX...')`
+  Example: `background-image: asset-url('images/highlight.png')` will produce
+  `background-image: url('data:image/png;base64,XXXXXXXXXX...')`
 
-`asset-url()` forces an extra HTTP request. Use it for large assets or assets
-on pages that most users will likely never see; that means most users won't load
-it.
+`asset-url()` forces an extra HTTP request each time a browser loads the
+stylesheet. Use it for large assets.
 
 `asset-data-url()` makes the stylesheet larger, since it includes the file
-contents. The page won't render until the stylesheet has transferred. Use it for
-assets under a few kilobytes in size, or assets every user will see.
+contents. The page won't render until the entire stylesheet has transferred. Use
+it for assets under a few kilobytes in size.
 
 Error handling
 --------------
