@@ -38,12 +38,12 @@ describe('javascript logic', () => {
       expect(js).to.contain('foobar') // something in the dependency
     }))
 
-    xit('should return a source map', async(assets => {
+    it('should return a source map', async(assets => {
       expect(assets.length).to.eq(2)
       expect(assets[1].key).to.eq('js1/app.js.map')
-      expect(assets[1].path).to.eq('/b/app.js.map')
-      expect(assets[1].contentType).to.eq('application/json; charset=utf-8')
-      expect(() => JSON.parse(assets[1].data.toString('utf-8'))).not.to.throw(Error)
+      expect(assets[1].href).to.match(/\/b\/js1\/app-[0-9a-f]{8}\.js\.map/)
+      expect(assets[1].contentType).to.eq('application/json')
+      expect(() => JSON.parse(assets[1].data)).not.to.throw(Error)
     }))
   })
 
