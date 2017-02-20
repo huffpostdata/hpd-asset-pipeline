@@ -40,6 +40,25 @@ describe('scss logic', () => {
     })
   })
 
+  describe('in a bucket with existing assets', () => {
+    const bucket = {
+      basePath: `${__dirname}/../fixtures`,
+      dataUriFor(key) { return `data:application/test,${key}` },
+      hrefTo(key) { return `/path/to/${key}` }
+    }
+    const assets = index.logic.scss.sync(bucket, [ 'styles/asset-urls.scss' ])
+    const asset = assets[0]
+    const css = asset.data.toString('utf-8')
+
+    it('should call dataUriFor()', () => {
+      expect(css).to.contain('.test-asset-data-url{background:url(data:application/test,TEST_ASSET_DATA_URL)}')
+    })
+
+    it('should call hrefTo()', () => {
+      expect(css).to.contain('.test-asset-url{background:url(/path/to/TEST_ASSET_URL)}')
+    })
+  })
+
   it('should handle zero files', () => {
     expect(go([])).to.deep.eq([])
   })
