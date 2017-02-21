@@ -45,6 +45,11 @@ describe('javascript logic', () => {
       expect(assets[1].contentType).to.eq('application/json')
       expect(() => JSON.parse(assets[1].data)).not.to.throw(Error)
     }))
+
+    it('should link to its source map', async(assets => {
+      const js = assets[0].data.toString('utf-8')
+      expect(js).to.contain(`\n//# sourceMappingURL=${assets[0].href}.map`)
+    }))
   })
 
   it('should handle multiple files', (done) => {
