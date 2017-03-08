@@ -62,10 +62,34 @@ describe('javascript logic', () => {
     })
   })
 
-  it('should return an error', (done) => {
-    go([ 'js-with-error.js' ], (err, assets) => {
-      expect(err).to.be.an('error')
-      done()
+  describe('error handling', () => {
+    it('should throw on blatant syntax error (module-deps)', (done) => {
+      go([ 'js-with-module-deps-error.js' ], (err, assets) => {
+        expect(err).to.be.an('error')
+        expect(err.message).to.match(/Unterminated string constant/)
+        expect(err.message).to.match(/1:8/) // line number
+        done()
+      })
+    })
+
+    it('should throw on subtler parse error (uglifyJs)', (done) => {
+      go([ 'js-with-uglify-error.js' ], (err, assets) => {
+        expect(err).to.be.an('error')
+        expect(err.message).to.match(/Unexpected token/)
+        expect(err.message).to.match(/js-with-uglify-error\.js/) // filename
+        expect(err.message).to.match(/2,6/) // line number
+        done()
+      })
+    })
+
+    it('should throw on dependency parse error (uglifyJs)', (done) => {
+      go([ 'js-depending-on-uglify-error.js' ], (err, assets) => {
+        expect(err).to.be.an('error')
+        expect(err.message).to.match(/Unexpected token/)
+        expect(err.message).to.match(/js-with-uglify-error\.js/) // filename
+        expect(err.message).to.match(/2,6/) // line number
+        done()
+      })
     })
   })
 
