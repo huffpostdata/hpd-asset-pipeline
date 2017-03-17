@@ -46,7 +46,7 @@ const configuration = {
       //   "image-ab2321a.png"
       // * Assigns a Content-Type based on the file extension
       logic: 'digest',
-      glob: images/**/*.{png,jpg,gif,svg,ico}'
+      glob: 'images/**/*.{png,jpg,gif,svg,ico}'
     },
     {
       logic: 'digest',
