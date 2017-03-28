@@ -167,6 +167,5 @@ it calls `callback(new Error(...))`.
 License
 -------
 
-Copyright (c) 2017 The Huffington Post
-
-MIT. TODO include license text
+Copyright (c) 2017 The Huffington Post, released under the MIT license.
+See LICENSE.
