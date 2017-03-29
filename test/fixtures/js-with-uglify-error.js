@@ -1,3 +1,3 @@
 module.exports = {
-  func() {} // an error UglifyJS catches but module-deps misses
+  func() {default} // an error UglifyJS catches but module-deps misses
 }
