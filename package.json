@@ -1,6 +1,6 @@
 {
   "name": "hpd-asset-pipeline",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "description": "Yet Another Asset Pipeline",
   "main": "index.js",
   "scripts": {
@@ -26,16 +26,16 @@
   },
   "homepage": "https://github.com/huffpostdata/hpd-asset-pipeline#readme",
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.1.0",
     "mocha": "^3.2.0"
   },
   "dependencies": {
-    "autoprefixer": "^6.7.7",
+    "autoprefixer": "^7.1.2",
     "browser-pack": "^6.0.2",
     "cached-path-relative": "^1.0.1",
     "module-deps": "^4.1.1",
     "node-sass": "^4.5.0",
-    "postcss": "^5.2.17",
+    "postcss": "^6.0.8",
     "uglify-es": "^3.0.26"
   }
 }
