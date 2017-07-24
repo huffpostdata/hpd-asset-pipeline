@@ -19,8 +19,9 @@ describe('javascript logic', () => {
   describe('with a JS file that has a dependency', () => {
     function async(test) {
       return function(done) {
+        process.env.UGLIFY = "true"
         go([ 'js1/app.js' ], (err, assets) => {
-          expect(err).to.not.exist
+          if (err) return done(err)
           test(assets)
           return done()
         })
@@ -45,11 +46,17 @@ describe('javascript logic', () => {
       expect(assets[1].contentType).to.eq('application/json')
       expect(() => JSON.parse(assets[1].data)).not.to.throw(Error)
     }))
+
+    it('should point to the source map from JavaScript', async(assets => {
+      const jsBuf = assets[0].data
+      const js = jsBuf.toString('utf-8')
+      expect(js).to.contain('\n//# sourceMappingURL=' + assets[1].href)
+    }))
   })
 
   it('should handle multiple files', (done) => {
     go([ 'js1/app.js', 'js2.js', ], (err, assets) => {
-      expect(err).to.not.exist
+      if (err) return done(err)
       const keys = assets.map(a => a.key)
       expect(keys.indexOf('js1/app.js')).to.not.eq(-1)
       expect(keys.indexOf('js2.js')).to.not.eq(-1)
@@ -66,9 +73,70 @@ describe('javascript logic', () => {
 
   it('should handle zero files', (done) => {
     go([], (err, assets) => {
-      expect(err).to.not.exist
+      if (err) return done(err)
       expect(assets).to.deep.eq([])
       done()
     })
+  })
+
+  describe('with const+let+`+arrow+class support (which modern desktop browsers all support)', () => {
+    function async(test) {
+      return function(done) {
+        process.env.UGLIFY = "true"
+        go([ 'js3/app.js' ], (err, assets) => {
+          if (err) return done(err)
+          test(assets)
+          return done()
+        })
+      }
+    }
+
+    it('should return JavaScript code', async(assets => {
+      const jsBuf = assets[0].data
+      const js = jsBuf.toString('utf-8')
+      expect(() => eval(js)).not.to.throw(Error)
+      expect(js).to.contain('foobar') // something in the dependency
+      expect(js).to.contain('=>') // no transpiling: what you type is what the browser sees
+    }))
+  })
+
+  describe('with a JS file that has a dependency, without uglifying', () => {
+    function async(test) {
+      return function(done) {
+        delete process.env.UGLIFY
+        go([ 'js1/app.js' ], (err, assets) => {
+          if (err) return done(err)
+          test(assets)
+          return done()
+        })
+      }
+    }
+
+    it('should return JavaScript code', async(assets => {
+      const jsBuf = assets[0].data
+      const js = jsBuf.toString('utf-8')
+      expect(() => eval(js)).not.to.throw(Error)
+      expect(js).to.contain('foobar') // something in the dependency
+    }))
+
+    it('should return a source map', async(assets => {
+      expect(assets.length).to.eq(2)
+      expect(assets[1].key).to.eq('js1/app.js.map')
+      expect(assets[1].href).to.match(/\/b\/js1\/app-[0-9a-f]{8}\.js\.map/)
+      expect(assets[1].contentType).to.eq('application/json')
+      expect(() => JSON.parse(assets[1].data)).not.to.throw(Error)
+    }))
+
+    it('should point to the source map from JavaScript', async(assets => {
+      const jsBuf = assets[0].data
+      const js = jsBuf.toString('utf-8')
+      expect(js).to.contain('\n//# sourceMappingURL=' + assets[1].href)
+    }))
+
+    it('should not monify', async(assets => {
+      const jsBuf = assets[0].data
+      const js = jsBuf.toString('utf-8')
+      expect(js).to.contain('    ')
+    }))
   })
 })
